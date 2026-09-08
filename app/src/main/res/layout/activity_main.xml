@@ -114,6 +114,88 @@
                     app:cornerRadius="12dp"
                     app:elevation="0dp" />
             </LinearLayout>
+
+            <!-- New GitHub Update Banner Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardUpdateBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:visibility="gone"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#2D3B2F">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🚀"
+                            android:textSize="18sp"
+                            android:layout_marginEnd="8dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="New Update Available!"
+                            android:textColor="#81C784"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/btnCloseUpdate"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:contentDescription="Dismiss"
+                            app:tint="#A5D6A7" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvUpdateCommitMsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="A new update was published on GitHub."
+                        android:textColor="#E8F5E9"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvUpdateDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Commit: 7e2518c • Just now"
+                        android:textColor="#A5D6A7"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnViewUpdateOnGithub"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="View Update on GitHub"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#1B5E20"
+                        app:backgroundTint="#81C784"
+                        app:cornerRadius="8dp"
+                        app:elevation="0dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
         <!-- Lessons List -->

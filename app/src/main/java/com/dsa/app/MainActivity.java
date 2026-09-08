@@ -40,5 +40,22 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("scroll_to_bottom", false)) {
             rvLessons.post(() -> rvLessons.scrollToPosition(lessons.size()));
         }
+
+        // Check for new updates on GitHub
+        androidx.cardview.widget.CardView cardUpdateBanner = findViewById(R.id.cardUpdateBanner);
+        android.widget.TextView tvUpdateCommitMsg = findViewById(R.id.tvUpdateCommitMsg);
+        android.widget.TextView tvUpdateDetails = findViewById(R.id.tvUpdateDetails);
+        MaterialButton btnViewUpdateOnGithub = findViewById(R.id.btnViewUpdateOnGithub);
+        android.widget.ImageView btnCloseUpdate = findViewById(R.id.btnCloseUpdate);
+
+        if (cardUpdateBanner != null) {
+            new UpdateChecker(this).checkForUpdates(
+                cardUpdateBanner,
+                tvUpdateCommitMsg,
+                tvUpdateDetails,
+                btnViewUpdateOnGithub,
+                btnCloseUpdate
+            );
+        }
     }
 }
