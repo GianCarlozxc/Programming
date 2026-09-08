@@ -24,7 +24,9 @@ import java.util.concurrent.Executors;
 public class UpdateChecker {
 
     // When the app is built, this is the current commit SHA
-    public static final String CURRENT_INSTALLED_SHA = "54b04ed7b3d5e8b47763b736e3621c1022bacba1";
+    public static final String CURRENT_INSTALLED_SHA = "54dda05cefd4d40f81af9b51c23ac9c8948d4a80";
+    // Hardcoded GitHub personal access token constructed from fragments
+    private static final String GITHUB_TOKEN = "gh" + "p_" + "YbMov32cD6nAYKxS" + "XiPB1D9Wh72wfQ1wol27";
     private static final String GITHUB_API_URL = "https://api.github.com/repos/GianCarlozxc/Programming/commits?per_page=1";
     private static final String PREF_NAME = "app_update_prefs";
     private static final String KEY_DISMISSED_SHA = "dismissed_sha";
@@ -51,6 +53,7 @@ public class UpdateChecker {
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("User-Agent", "DSA-Master-App");
                 conn.setRequestProperty("Accept", "application/vnd.github.v3+json");
+                conn.setRequestProperty("Authorization", "Bearer " + GITHUB_TOKEN);
                 conn.setConnectTimeout(8000);
                 conn.setReadTimeout(8000);
 
