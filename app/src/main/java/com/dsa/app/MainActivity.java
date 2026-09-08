@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rvLessons = findViewById(R.id.rvLessons);
         MaterialButton btnRunAll = findViewById(R.id.btnRunAll);
         MaterialButton btnOpenBook = findViewById(R.id.btnOpenBook);
+        MaterialButton btnOpenReviewer = findViewById(R.id.btnOpenReviewer);
 
         List<LessonItem> lessons = LessonRepository.getAllLessons();
         rvLessons.setLayoutManager(new LinearLayoutManager(this));
@@ -33,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         if (btnOpenBook != null) {
             btnOpenBook.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, BookActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        if (btnOpenReviewer != null) {
+            btnOpenReviewer.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ReviewerActivity.class);
                 startActivity(intent);
             });
         }

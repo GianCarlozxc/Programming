@@ -30,6 +30,10 @@
             android:name="com.dsa.app.BookActivity"
             android:exported="true"
             android:parentActivityName="com.dsa.app.MainActivity" />
+        <activity
+            android:name="com.dsa.app.ReviewerActivity"
+            android:exported="true"
+            android:parentActivityName="com.dsa.app.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
