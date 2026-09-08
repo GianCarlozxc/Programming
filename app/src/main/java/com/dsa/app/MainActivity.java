@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         android.widget.TextView tvUpdateDetails = findViewById(R.id.tvUpdateDetails);
         MaterialButton btnViewUpdateOnGithub = findViewById(R.id.btnViewUpdateOnGithub);
         android.widget.ImageView btnCloseUpdate = findViewById(R.id.btnCloseUpdate);
+        android.widget.ProgressBar pbUpdateProgress = findViewById(R.id.pbUpdateProgress);
+        android.widget.TextView tvUpdateStatus = findViewById(R.id.tvUpdateStatus);
 
         if (cardUpdateBanner != null) {
             new UpdateChecker(this).checkForUpdates(
@@ -54,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 tvUpdateCommitMsg,
                 tvUpdateDetails,
                 btnViewUpdateOnGithub,
-                btnCloseUpdate
+                btnCloseUpdate,
+                pbUpdateProgress,
+                tvUpdateStatus
             );
         }
     }
