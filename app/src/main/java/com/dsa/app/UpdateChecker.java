@@ -32,14 +32,12 @@ import java.util.concurrent.Executors;
 
 public class UpdateChecker {
 
-    // When the app is built, this is the current commit SHA
-    public static final String CURRENT_INSTALLED_SHA = "b6d4be95379b3cb6f4b62dbd666d6d4ba4c81a28";
-    // Hardcoded GitHub personal access token constructed from fragments
+    // Current installed app version tag
+    public static final String CURRENT_INSTALLED_TAG = "v1.0.3";
     private static final String GITHUB_TOKEN = "gh" + "p_" + "YbMov32cD6nAYKxS" + "XiPB1D9Wh72wfQ1wol27";
-    private static final String GITHUB_API_COMMITS = "https://api.github.com/repos/GianCarlozxc/Programming/commits?per_page=1";
     private static final String GITHUB_API_RELEASES = "https://api.github.com/repos/GianCarlozxc/Programming/releases/latest";
     private static final String PREF_NAME = "app_update_prefs";
-    private static final String KEY_DISMISSED_SHA = "dismissed_sha";
+    private static final String KEY_DISMISSED_TAG = "dismissed_tag";
 
     private final Context context;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -60,7 +58,7 @@ public class UpdateChecker {
 
         executor.execute(() -> {
             try {
-                URL url = new URL(GITHUB_API_COMMITS);
+                URL url = new URL(GITHUB_API_RELEASES);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("User-Agent", "DSA-Master-App");
@@ -79,106 +77,96 @@ public class UpdateChecker {
                     }
                     reader.close();
 
-                    JSONArray commitsArray = new JSONArray(sb.toString());
-                    if (commitsArray.length() > 0) {
-                        JSONObject latestCommit = commitsArray.getJSONObject(0);
-                        String sha = latestCommit.getString("sha");
+                    JSONObject releaseJson = new JSONObject(sb.toString());
+                    String tagName = releaseJson.optString("tag_name", "");
+                    String releaseName = releaseJson.optString("name", tagName);
+                    String publishedAt = releaseJson.optString("published_at", "");
+                    if (publishedAt.length() >= 10) {
+                        publishedAt = publishedAt.substring(0, 10);
+                    }
 
-                        JSONObject commitObj = latestCommit.getJSONObject("commit");
-                        String message = commitObj.getString("message");
-                        String date = "";
-                        if (commitObj.has("committer") && commitObj.getJSONObject("committer").has("date")) {
-                            date = commitObj.getJSONObject("committer").getString("date");
-                            if (date.length() >= 10) {
-                                date = date.substring(0, 10);
+                    // Find APK download URL from release assets
+                    String apkDownloadUrl = null;
+                    JSONArray assets = releaseJson.optJSONArray("assets");
+                    if (assets != null) {
+                        for (int i = 0; i < assets.length(); i++) {
+                            JSONObject asset = assets.getJSONObject(i);
+                            if (asset.optString("name", "").endsWith(".apk")) {
+                                apkDownloadUrl = asset.optString("browser_download_url", "");
+                                break;
                             }
                         }
+                    }
 
-                        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-                        String dismissedSha = prefs.getString(KEY_DISMISSED_SHA, "");
+                    SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+                    String dismissedTag = prefs.getString(KEY_DISMISSED_TAG, "");
 
-                        // If remote SHA is different from the currently installed SHA and hasn't been dismissed:
-                        if (!sha.equalsIgnoreCase(CURRENT_INSTALLED_SHA) && !sha.equalsIgnoreCase(dismissedSha)) {
-                            final String displaySha = sha.length() >= 7 ? sha.substring(0, 7) : sha;
-                            final String displayMsg = message.contains("\n") ? message.substring(0, message.indexOf("\n")) : message;
-                            final String finalDate = date;
+                    // Compare remote tag to current installed version tag and dismissed tag
+                    boolean isNewer = isTagNewer(tagName, CURRENT_INSTALLED_TAG);
+                    if (isNewer && !tagName.equalsIgnoreCase(dismissedTag) && apkDownloadUrl != null) {
+                        final String finalApkUrl = apkDownloadUrl;
+                        final String finalTag = tagName;
+                        final String finalReleaseName = releaseName;
+                        final String finalDate = publishedAt;
 
-                            mainHandler.post(() -> {
-                                cardUpdateBanner.setVisibility(View.VISIBLE);
-                                tvCommitMsg.setText(displayMsg);
-                                tvDetails.setText("Commit: " + displaySha + (finalDate.isEmpty() ? "" : " • " + finalDate));
+                        mainHandler.post(() -> {
+                            cardUpdateBanner.setVisibility(View.VISIBLE);
+                            tvCommitMsg.setText("New Release Available: " + finalReleaseName);
+                            tvDetails.setText("Tag: " + finalTag + (finalDate.isEmpty() ? "" : " • " + finalDate));
 
-                                btnAction.setOnClickListener(v -> {
-                                    startDirectDownloadAndInstall(btnAction, progressBar, tvStatus);
-                                });
-
-                                btnClose.setOnClickListener(v -> {
-                                    cardUpdateBanner.setVisibility(View.GONE);
-                                    prefs.edit().putString(KEY_DISMISSED_SHA, sha).apply();
-                                });
+                            btnAction.setOnClickListener(v -> {
+                                startDirectDownloadAndInstall(finalApkUrl, btnAction, progressBar, tvStatus);
                             });
-                        }
+
+                            btnClose.setOnClickListener(v -> {
+                                cardUpdateBanner.setVisibility(View.GONE);
+                                prefs.edit().putString(KEY_DISMISSED_TAG, finalTag).apply();
+                            });
+                        });
                     }
                 }
             } catch (Exception e) {
-                // Silently handle offline / no internet situations
                 e.printStackTrace();
             }
         });
     }
 
+    private boolean isTagNewer(String remoteTag, String localTag) {
+        if (remoteTag == null || remoteTag.isEmpty()) return false;
+        if (localTag == null || localTag.isEmpty()) return true;
+
+        String cleanRemote = remoteTag.replaceAll("[^0-9.]", "");
+        String cleanLocal = localTag.replaceAll("[^0-9.]", "");
+
+        String[] rParts = cleanRemote.split("\\.");
+        String[] lParts = cleanLocal.split("\\.");
+
+        int length = Math.max(rParts.length, lParts.length);
+        for (int i = 0; i < length; i++) {
+            int rVal = i < rParts.length && !rParts[i].isEmpty() ? Integer.parseInt(rParts[i]) : 0;
+            int lVal = i < lParts.length && !lParts[i].isEmpty() ? Integer.parseInt(lParts[i]) : 0;
+            if (rVal > lVal) return true;
+            if (rVal < lVal) return false;
+        }
+        return false;
+    }
+
     private void startDirectDownloadAndInstall(
+            String downloadUrl,
             MaterialButton btnAction,
             ProgressBar progressBar,
             TextView tvStatus) {
 
         btnAction.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
-        progressBar.setIndeterminate(true);
+        progressBar.setIndeterminate(false);
+        progressBar.setProgress(0);
         tvStatus.setVisibility(View.VISIBLE);
-        tvStatus.setText("Locating latest release APK...");
+        tvStatus.setText("Downloading APK update...");
 
         executor.execute(() -> {
             try {
-                // Step 1: Query latest release asset URL from GitHub Releases API
-                URL releaseUrl = new URL(GITHUB_API_RELEASES);
-                HttpURLConnection relConn = (HttpURLConnection) releaseUrl.openConnection();
-                relConn.setRequestMethod("GET");
-                relConn.setRequestProperty("User-Agent", "DSA-Master-App");
-                relConn.setRequestProperty("Authorization", "Bearer " + GITHUB_TOKEN);
-                relConn.setConnectTimeout(8000);
-                relConn.setReadTimeout(8000);
-
-                String downloadUrl = "https://github.com/GianCarlozxc/Programming/releases/download/v1.0.0/app-debug.apk";
-                if (relConn.getResponseCode() == 200) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(relConn.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) sb.append(line);
-                    reader.close();
-
-                    JSONObject releaseJson = new JSONObject(sb.toString());
-                    JSONArray assets = releaseJson.optJSONArray("assets");
-                    if (assets != null && assets.length() > 0) {
-                        for (int i = 0; i < assets.length(); i++) {
-                            JSONObject asset = assets.getJSONObject(i);
-                            if (asset.getString("name").endsWith(".apk")) {
-                                downloadUrl = asset.getString("browser_download_url");
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                final String finalApkUrl = downloadUrl;
-                mainHandler.post(() -> {
-                    progressBar.setIndeterminate(false);
-                    progressBar.setProgress(0);
-                    tvStatus.setText("Downloading APK update...");
-                });
-
-                // Step 2: Download APK directly to app's cache directory
-                URL apkUrl = new URL(finalApkUrl);
+                URL apkUrl = new URL(downloadUrl);
                 HttpURLConnection apkConn = (HttpURLConnection) apkUrl.openConnection();
                 apkConn.setRequestMethod("GET");
                 apkConn.setInstanceFollowRedirects(true);
@@ -217,7 +205,7 @@ public class UpdateChecker {
                 output.close();
                 input.close();
 
-                // Step 3: Launch Android Package Installer directly
+                // Launch Android Package Installer directly
                 mainHandler.post(() -> {
                     progressBar.setVisibility(View.GONE);
                     tvStatus.setText("Download complete! Launching installer...");
@@ -251,7 +239,7 @@ public class UpdateChecker {
                         grantIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(grantIntent);
                     }
-                    Toast.makeText(context, "Please allow 'Install unknown apps' to update", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Please allow 'Install unknown apps' permission to complete update", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -266,11 +254,12 @@ public class UpdateChecker {
             installIntent.setDataAndType(apkUri, "application/vnd.android.package-archive");
             installIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             context.startActivity(installIntent);
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Error launching installer: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Install error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }
