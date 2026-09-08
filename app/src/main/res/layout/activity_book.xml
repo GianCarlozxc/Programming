@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background Wallpaper -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/app_bg"
+        android:scaleType="centerCrop"
+        android:contentDescription="Background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#59000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Header Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="16dp"
+            android:background="@color/header_surface_translucent">
+
+            <ImageButton
+                android:id="@+id/btnBackBook"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_revert"
+                app:tint="@color/text_primary"
+                android:contentDescription="Back" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Structures Book"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Week 3 • Arrays &amp; Java Swing Handbook"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tag_badge"
+                android:text="PAGE 2"
+                android:textColor="@color/accent_blue"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Book Reading ScrollView -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Table of Contents Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📖 Table of Contents"
+                            android:textColor="@color/accent_blue"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="• PART I: Core Data Structures — Java Arrays&#10;  - Chapter 1: Concept &amp; Memory Layout (Slides 3, 8)&#10;  - Chapter 2: Declaration, Instantiation &amp; Literals (Slides 4-7)&#10;  - Chapter 3: Single, 2D &amp; Object Arrays (Slides 9-11)&#10;  - Chapter 4: Advantages vs. Disadvantages (Slide 12)&#10;&#10;• PART II: Graphical User Interfaces — Java Swing&#10;  - Chapter 5: Introduction &amp; Swing vs. AWT (Slides 13-14)&#10;  - Chapter 6: Complete Swing Components Catalog (Slides 15-17)&#10;  - Chapter 7: Project Study — McDolibee Kiosk (Slides 18-21)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Part 1 Header -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="PART I: CORE DATA STRUCTURES (ARRAYS)"
+                    android:textColor="@color/accent_green"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.05"
+                    android:textStyle="bold" />
+
+                <!-- Chapter 1 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 1: Understanding Java Arrays (Slides 3 &amp; 8)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="What is an Array?&#10;An array is a linear collection of elements that share the exact same data type. Instead of creating 100 individual variables for 100 names, an array bundles them into a continuous block under a single variable name.&#10;&#10;Key Physical Characteristics:&#10;1. Contiguous Memory: Items sit right next to each other in physical memory.&#10;2. Fixed Size (Static Nature): Once allocated in memory, its length cannot expand or shrink.&#10;3. Zero-Based Indexing: Elements start counting at 0. The first item is at index [0], and the 5th item is at index [4]."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Chapter 2 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 2: Lifecycle — Declaration, Instantiation &amp; Literals (Slides 4–7)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="1. Declaration (Slides 4 &amp; 5):&#10;Declares the variable name and element type. At this stage, no memory is allocated yet, only a reference pointer is prepared.&#10;• Format: dataType[] arrayName; (e.g. double[] data; or int[] numbers;)&#10;&#10;2. Instantiation (Slide 6):&#10;Allocates actual physical space in heap memory using the 'new' operator.&#10;• Format: arrayName = new type[size];&#10;• Combined: int[] numbers = new int[20];&#10;&#10;3. Array Literals (Slide 7):&#10;When all values are known in advance, you can initialize elements inside curly braces { 1, 2, 3, 4, 5 } without writing 'new int[]'.&#10;&#10;4. Traversing with Loop (Slide 7):&#10;Sequential reading starts at index 0 up to (array.length - 1)."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Chapter 3 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 3: Dimensionality &amp; Object Arrays (Slides 9–11)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="1. Single-Dimensional Arrays (Slide 9):&#10;A linear one-directional row of values, accessed using a single index: array[i].&#10;&#10;2. Multi-Dimensional Arrays (Slide 10):&#10;Tables, grids, or matrices with rows and columns. A 2D array is essentially an array containing other arrays as its elements, accessed via array[row][col].&#10;&#10;3. Arrays of Objects (Slide 11):&#10;Arrays can hold references to custom classes (such as a Student object). Each index holds an address pointing to the object instance."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Chapter 4 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 4: Trade-off Analysis (Slide 12)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Advantages:&#10;• Instant Access: Constant time O(1) random lookup by index calculation.&#10;• Memory Efficiency: No extra pointer memory overhead.&#10;• Safe Data Organization: Type homogeneity prevents incompatible data.&#10;&#10;Disadvantages:&#10;• Fixed Capacity: Cannot resize once created; overestimating wastes memory while underestimating causes overflow.&#10;• Costly Insertions &amp; Deletions: Adding or removing elements from middle requires shifting all subsequent elements (O(N) time)."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Part 2 Header -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="PART II: GRAPHICAL USER INTERFACES (JAVA SWING)"
+                    android:textColor="@color/accent_blue"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.05"
+                    android:textStyle="bold" />
+
+                <!-- Chapter 5 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 5: Swing Introduction &amp; Hierarchy (Slides 13 &amp; 14)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="What is Java Swing?&#10;Swing is a Java Foundation Classes (JFC) GUI toolkit that superseded the older Abstract Window Toolkit (AWT).&#10;&#10;AWT vs. Swing Differences:&#10;• Weight: AWT components are Heavyweight (tied to native OS); Swing components are Lightweight (rendered purely in Java).&#10;• Portability: AWT looks different on Windows/Mac/Linux; Swing provides uniform, platform-independent appearance.&#10;• Performance: Swing is faster, highly customizable, and supports pluggable look-and-feel.&#10;&#10;Component Hierarchy:&#10;Object -> Component -> Container -> JComponent -> (JButton, JLabel, JComboBox, JTextArea, etc.). Top-level windows inherit from Window -> Frame -> JFrame."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Chapter 6 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 6: Swing Component Catalog (Slides 15–17)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Core Visual Components:&#10;• JFrame: The main application window with title bar and close buttons.&#10;• JLabel: Non-editable text or image labels.&#10;• JButton: Push buttons triggering user action events.&#10;• JCheckBox: Two-state checkable option (true/false).&#10;• JRadioButton: Single-choice selection within a button group.&#10;• JComboBox: Dropdown menu for selecting one option from a list.&#10;• JTextField / JPasswordField: Single-line user text / masked password input.&#10;• JTextArea: Multi-line text display for receipts, logs, and summaries.&#10;• JOptionPane: Quick pop-up modal dialogs for alerts and input prompts.&#10;• JProgressBar / JSlider / JSpinner: Visual progress bars, range sliders, and numeric step spinners."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Chapter 7 Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="28dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/card_bg"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chapter 7: Project Study — McDolibee Kiosk (Slides 18–21)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="System Design &amp; Architecture:&#10;A practical fast food ordering desktop application integrating Swing widgets with procedural state management.&#10;&#10;1. State Variables (Slide 19):&#10;Tracks item quantities in static integer variables: burgerCount, friesCount, sodaCount.&#10;&#10;2. Null Layout &amp; Positioning (Slide 19):&#10;Uses setLayout(null) and manual setBounds(x, y, width, height) coordinates to place items, buttons, and combo boxes precisely on the screen.&#10;&#10;3. Event Handling (Slides 19 &amp; 20):&#10;• '+' &amp; '-' Buttons: Increment/decrement item counts and refresh count labels.&#10;• 'Review Order' Button: Calls calculateCost() method to multiply quantities by selected combo box sizes (Small/Medium/Large) and formats a bill into JTextArea.&#10;• 'Reset Order' Button: Clears counters back to 0, resets dropdowns, and wipes the summary area."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
